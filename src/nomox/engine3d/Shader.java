@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
@@ -25,6 +26,7 @@ public class Shader {
 		program = GL20.glCreateProgram();
 		if (program == 0)
 			throw new RuntimeException("glCreateProgram error");
+		
 		createVertexShader(sourceVertex);
 		createFragmentShader(sourceFragment);
 	}
@@ -52,6 +54,9 @@ public class Shader {
 	}
 	public void setUniform(String name, int value) {
 		GL20.glUniform1i(uniforms.get(name), value);
+	}
+	public void setUniform(String name, Vector3f value) {
+		GL20.glUniform3f(uniforms.get(name), value.x, value.y, value.z);
 	}
 	
 	private int createShader(String source, int shaderType) {

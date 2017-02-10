@@ -15,6 +15,7 @@ public class Engine {
 	private static long windowID;
 	private Display display;
 	private EngineEvents engineEvents;
+	private Renderer renderer;
 	
 	private double lastFrame;
 	
@@ -45,11 +46,11 @@ public class Engine {
 		// keyboard listener
 		glfwSetKeyCallback(windowID, (window, key, scancode, action, mods) -> {
 			if (action == GLFW_PRESS) {
-				Keyboard.currentKey = key;
+				Keyboard.pressed_keys.add(key);
 				engineEvents.keyPressed(key);
 			}
 			if (action == GLFW_RELEASE) {
-				Keyboard.currentKey = -1;
+				Keyboard.pressed_keys.remove(new Integer(key));
 				engineEvents.keyReleased(key);
 			}
 			/*
@@ -88,6 +89,7 @@ public class Engine {
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glDepthFunc(GL_LESS);
+		//glCullFace(GL_BACK);
 		
 		engineEvents.init();
 		getDelta();
@@ -98,6 +100,7 @@ public class Engine {
 			double delta = getDelta();
 			engineEvents.update(delta);
 			engineEvents.render();
+			renderer.render();
 			
             glfwSwapBuffers(windowID);
 			glfwPollEvents();
@@ -119,5 +122,8 @@ public class Engine {
 		double delta = (time - lastFrame);
 		lastFrame = time;
 		return delta;
+	}
+	public void setRenderer(Renderer renderer) {
+		this.renderer = renderer;
 	}
 }

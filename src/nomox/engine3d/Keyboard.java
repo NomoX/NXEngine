@@ -2,6 +2,9 @@ package nomox.engine3d;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Keyboard {
 	//public static final int VK_NONE            = 0;
 	public static final int VK_ESCAPE          = GLFW_KEY_ESCAPE;
@@ -104,9 +107,9 @@ public class Keyboard {
 	public static final int VK_INSERT          = GLFW_KEY_INSERT; /* Insert on arrow keypad */
 	public static final int VK_DELETE          = GLFW_KEY_DELETE; /* Delete on arrow keypad */
 	
-	protected static int currentKey = -1;
+	protected static List<Integer> pressed_keys = new ArrayList<>();
 	
 	public static boolean isKeyDown(int key) {
-		return currentKey == key;
+		return pressed_keys.contains(key);
 	}
 }

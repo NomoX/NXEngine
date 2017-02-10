@@ -55,10 +55,14 @@ public class RawModel {
 		for (int i : vboList)
 			GL15.glDeleteBuffers(i);
 	}
+	public int getVao() {
+		return vao;
+	}
 	public void draw() {
 		GL30.glBindVertexArray(vao);
 		GL20.glEnableVertexAttribArray(0); // врубаєм модельку
 		GL20.glEnableVertexAttribArray(1); // врубаєм текстурки
+		GL20.glEnableVertexAttribArray(2); // врубаєм нормалі
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboi);
 
 		GL11.glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0); // Т-34 нє прабіл сук
@@ -66,6 +70,7 @@ public class RawModel {
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
+		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
 	}
 }
